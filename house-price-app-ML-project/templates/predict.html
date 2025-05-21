@@ -1,1 +1,55 @@
 
+<!-- FILE: templates/predict.html -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predict House Prices">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <title>Predict House Price</title>
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__title">House Price Prediction</h1>
+    <nav class="nav">
+      <a href="/" class="nav__link">Home</a>
+      <a href="/eda" class="nav__link">EDA</a>
+      <a href="/predict" class="nav__link nav__link--active">Predict</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <form id="prediction-form" class="form" novalidate>
+      <label for="GrLivArea">Living Area (sq ft) [居住面积 (平方英尺)]:</label>
+      <input id="GrLivArea" name="GrLivArea" type="number" required>
+
+      <label for="TotalBsmtSF">Basement Area (sq ft) [地下室面积 (平方英尺)]:</label>
+      <input id="TotalBsmtSF" name="TotalBsmtSF" type="number" required>
+
+      <label for="YearBuilt">Year Built [建造年份]:</label>
+      <input id="YearBuilt" name="YearBuilt" type="number" required>
+
+      <label for="FullBath">Full Bathrooms [卫浴间数]:</label>
+      <input id="FullBath" name="FullBath" type="number" required>
+
+      <label for="GarageCars">Garage Size (cars) [车库容量 (可停车数)]:</label>
+      <input id="GarageCars" name="GarageCars" type="number" required>
+
+      <label for="OverallQual">Overall Quality (1-10) [整体品质 (1-10分)]:</label>
+      <input id="OverallQual" name="OverallQual" type="number" required>
+
+      <button type="submit" class="cta-button">Predict Price</button>
+      <p id="loading" class="form__loading" hidden>⏳ Predicting...</p>
+    </form>
+
+    <div id="prediction-result" class="result" aria-live="polite"></div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">&copy; 2025 House Price Intelligence App. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="/static/js/script.js"></script>
+</body>
+</html>
