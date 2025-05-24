@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Elegant BERT Sentiment Classifier" />
+  <title>⌨️Sentiment Classifier</title>
+  <link rel="icon" href="https://emoji.gg/assets/emoji/3532-checkmark-green.png" type="image/png">
+  <link rel="stylesheet" href="/static/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="themeSwitcher" />
+      <span class="slider"></span>
+    </label>
+  </div>
+  <main class="container">
+    <h1>🎯 Sentiment Classifier (情感分析)</h1>
+    <textarea id="text" placeholder="请输入评论..."></textarea>
+    <div class="flex-row">
+      <button id="btn">🚀 分类</button>
+      <button id="micBtn" aria-label="Speak" title="Speak">🎤</button>
+    </div>
+    <div id="languageInfo" class="lang-note"></div>
+    <div id="highlighted" class="highlight-box hidden"></div>
+    <div id="loading" class="loading hidden">Classifying<span class="dots"></span></div>
+    <div id="result" class="result"></div>
+  </main>
+  <script src="/static/script.js"></script>
+</body>
+</html>

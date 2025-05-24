@@ -1,72 +1,60 @@
 // FILE: static/js/script.js
 
-const themeToggle = document.getElementById("theme-toggle");
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const root = document.documentElement;
+document.addEventListener("DOMContentLoaded", () => {
+  const predictionForm = document.getElementById("prediction-form");
+  const resultBox = document.getElementById("prediction-result");
+  const loadingText = document.getElementById("loading");
+  const exampleBtn = document.getElementById("example-fill");
 
-// === THEME TOGGLE ===
-if (themeToggle) {
-  const currentTheme = localStorage.getItem("theme") || (prefersDark ? "dark" : "light");
-  root.setAttribute("data-theme", currentTheme);
-  themeToggle.addEventListener("click", () => {
-    const newTheme = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-    root.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  });
-}
+  if (predictionForm) {
+    predictionForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      resultBox.textContent = "";
+      loadingText.hidden = false;
 
-// === AJAX PREDICTION FORM ===
-const predictionForm = document.getElementById("prediction-form");
-if (predictionForm) {
-  predictionForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const loading = document.getElementById("loading");
-    const result = document.getElementById("prediction-result");
-    loading.hidden = false;
-    result.textContent = "";
-
-    const formData = new FormData(predictionForm);
-    const payload = Object.fromEntries(formData.entries());
-    Object.keys(payload).forEach(k => payload[k] = parseFloat(payload[k]));
-
-    try {
-      const res = await fetch("/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        result.textContent = `Predicted Price: $${data.prediction.toLocaleString()}`;
-      } else {
-        result.textContent = `Error: ${data.error || 'Invalid input'}`;
+      const formData = new FormData(predictionForm);
+      const payload = Object.fromEntries(formData.entries());
+      for (const key in payload) {
+        payload[key] = parseFloat(payload[key]);
       }
-    } catch (error) {
-      result.textContent = `Unexpected error occurred.`;
-    } finally {
-      loading.hidden = true;
-    }
-  });
-}
 
-// === DYNAMIC PLOTLY CHART ===
-const plotEl = document.getElementById("eda-plot");
-const selectEl = document.getElementById("feature-select");
-if (plotEl && selectEl) {
-  async function loadChart(feature) {
-    try {
-      const response = await fetch(`/static/data/mock_${feature}.json`);
-      const chartData = await response.json();
-      Plotly.newPlot("eda-plot", chartData.data, chartData.layout);
-    } catch (err) {
-      console.error("Failed to load chart:", err);
-    }
+      try {
+        const res = await fetch("/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok && data.prediction) {
+          resultBox.textContent = `Predicted Price: $${parseInt(data.prediction).toLocaleString()}`;
+        } else {
+          resultBox.textContent = data.error || "Prediction failed.";
+          resultBox.style.color = "var(--error-color)";
+        }
+      } catch (err) {
+        resultBox.textContent = "An unexpected error occurred.";
+        resultBox.style.color = "var(--error-color)";
+      } finally {
+        loadingText.hidden = true;
+      }
+    });
   }
 
-  selectEl.addEventListener("change", (e) => loadChart(e.target.value));
-  loadChart(selectEl.value);
-
-  const exportBtn = document.getElementById("download-chart");
-  exportBtn?.addEventListener("click", () => Plotly.downloadImage(plotEl, {format: 'png', filename: 'eda_plot'}));
-}
+  if (exampleBtn) {
+    exampleBtn.addEventListener("click", () => {
+      const examples = {
+        GrLivArea: 1800,
+        TotalBsmtSF: 1000,
+        YearBuilt: 2005,
+        FullBath: 2,
+        GarageCars: 2,
+        OverallQual: 7
+      };
+      for (const id in examples) {
+        const input = document.getElementById(id);
+        if (input) input.value = examples[id];
+      }
+    });
+  }
+});

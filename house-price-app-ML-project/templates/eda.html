@@ -1,57 +1,64 @@
+<!-- FILE: templates/eda.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="EDA Visualizations for House Prices">
+  <title>EDA Dashboard</title>
   <link rel="stylesheet" href="/static/css/styles.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <title>EDA Dashboard</title>
 </head>
 <body>
-  <header class="header">
-    <h1 class="header__title">Exploratory Data Analysis</h1>
+  <header class="nav-header">
     <nav class="nav">
-      <a href="/" class="nav__link">Home</a>
-      <a href="/eda" class="nav__link nav__link--active">EDA</a>
-      <a href="/predict" class="nav__link">Predict</a>
+      <a href="/">Home</a>
+      <a href="/eda" class="active">EDA</a>
+      <a href="/predict">Predict</a>
     </nav>
   </header>
 
-  <main class="main">
-    <section>
-      <h2 class="section-title">Correlation Heatmap</h2>
-      <img src="/static/img/corr_heatmap.png" alt="Correlation Heatmap" class="img-responsive" />
-    </section>
+  <main class="container">
+    <h1 class="page-title">Exploratory Data Analysis</h1>
 
-    <section>
-      <h2 class="section-title">Sale Price Distribution</h2>
-      <img src="/static/img/price_distribution.png" alt="Sale Price Distribution" class="img-responsive" />
-    </section>
+    <div class="eda-grid">
+      <section class="card collapsible">
+        <h2>Correlation Heatmap</h2>
+        <div class="scroll-box">
+          <img src="/static/img/corr_heatmap.png" alt="Correlation Heatmap" class="img-responsive" />
+        </div>
+      </section>
 
-    <section>
-      <h2 class="section-title">Feature Importance (Mock)</h2>
-      <div id="feature-importance"></div>
-    </section>
+      <section class="card collapsible">
+        <h2>Sale Price Distribution</h2>
+        <div class="scroll-box">
+          <img src="/static/img/price_distribution.png" alt="Sale Price Distribution" class="img-responsive" />
+        </div>
+      </section>
 
-    <section>
-      <h2 class="section-title">Average SalePrice by YearBuilt</h2>
-      <div id="price-trend"></div>
-    </section>
+      <section class="card collapsible">
+        <h2>Feature Importance (Mock)</h2>
+        <div id="feature-importance" class="plot-box"></div>
+      </section>
+
+      <section class="card collapsible">
+        <h2>Price Trend by Year</h2>
+        <div id="price-trend" class="plot-box"></div>
+      </section>
+    </div>
   </main>
 
   <footer class="footer">
-    <p class="footer__text">&copy; 2025 House Price Intelligence App. All rights reserved.</p>
+    <p>&copy; 2025 House Price Intelligence. All rights reserved.</p>
   </footer>
 
   <script>
-    async function loadPlot(containerId, plotFile) {
-      const res = await fetch(`/static/data/${plotFile}`);
-      const fig = await res.json();
+    async function renderPlot(containerId, fileName) {
+      const response = await fetch(`/static/data/${fileName}`);
+      const fig = await response.json();
       Plotly.newPlot(containerId, fig.data, fig.layout);
     }
-    loadPlot("feature-importance", "feature_importance.json");
-    loadPlot("price-trend", "price_trend.json");
+    renderPlot("feature-importance", "feature_importance.json");
+    renderPlot("price-trend", "price_trend.json");
   </script>
 </body>
 </html>

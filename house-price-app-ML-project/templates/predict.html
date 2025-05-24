@@ -1,53 +1,67 @@
-
 <!-- FILE: templates/predict.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Predict House Prices">
+  <title>Predict Price</title>
   <link rel="stylesheet" href="/static/css/styles.css">
-  <title>Predict House Price</title>
 </head>
 <body>
-  <header class="header">
-    <h1 class="header__title">House Price Prediction</h1>
+  <header class="nav-header">
     <nav class="nav">
-      <a href="/" class="nav__link">Home</a>
-      <a href="/eda" class="nav__link">EDA</a>
-      <a href="/predict" class="nav__link nav__link--active">Predict</a>
+      <a href="/">Home</a>
+      <a href="/eda">EDA</a>
+      <a href="/predict" class="active">Predict</a>
     </nav>
   </header>
 
-  <main class="main">
-    <form id="prediction-form" class="form" novalidate>
-      <label for="GrLivArea">Living Area (sq ft) [居住面积 (平方英尺)]:</label>
-      <input id="GrLivArea" name="GrLivArea" type="number" required>
+  <main class="container predict-container">
+    <h1 class="page-title">Estimate House Price</h1>
+    <div class="card predict-card">
+      <form id="prediction-form" class="form-grid">
+        <div class="form-group">
+          <label for="GrLivArea">Living Area (sq ft)</label>
+          <input id="GrLivArea" name="GrLivArea" type="number" required>
+        </div>
 
-      <label for="TotalBsmtSF">Basement Area (sq ft) [地下室面积 (平方英尺)]:</label>
-      <input id="TotalBsmtSF" name="TotalBsmtSF" type="number" required>
+        <div class="form-group">
+          <label for="TotalBsmtSF">Basement SF</label>
+          <input id="TotalBsmtSF" name="TotalBsmtSF" type="number" required>
+        </div>
 
-      <label for="YearBuilt">Year Built [建造年份]:</label>
-      <input id="YearBuilt" name="YearBuilt" type="number" required>
+        <div class="form-group">
+          <label for="YearBuilt">Year Built</label>
+          <input id="YearBuilt" name="YearBuilt" type="number" required>
+        </div>
 
-      <label for="FullBath">Full Bathrooms [卫浴间数]:</label>
-      <input id="FullBath" name="FullBath" type="number" required>
+        <div class="form-group">
+          <label for="FullBath">Bathrooms</label>
+          <input id="FullBath" name="FullBath" type="number" min="0" max="5" required>
+        </div>
 
-      <label for="GarageCars">Garage Size (cars) [车库容量 (可停车数)]:</label>
-      <input id="GarageCars" name="GarageCars" type="number" required>
+        <div class="form-group">
+          <label for="GarageCars">Garage Capacity</label>
+          <input id="GarageCars" name="GarageCars" type="number" min="0" max="5" required>
+        </div>
 
-      <label for="OverallQual">Overall Quality (1-10) [整体品质 (1-10分)]:</label>
-      <input id="OverallQual" name="OverallQual" type="number" required>
+        <div class="form-group">
+          <label for="OverallQual">Overall Quality (1-10)</label>
+          <input id="OverallQual" name="OverallQual" type="number" min="1" max="10" required>
+        </div>
 
-      <button type="submit" class="cta-button">Predict Price</button>
-      <p id="loading" class="form__loading" hidden>⏳ Predicting...</p>
-    </form>
-
-    <div id="prediction-result" class="result" aria-live="polite"></div>
+        <div class="form-group full-width">
+          <button type="submit" class="btn btn--primary">🔍 Estimate Price</button>
+          <button type="button" id="example-fill" class="btn btn--secondary">Use Example</button>
+          <p id="loading" class="loading-text" hidden>⏳ Predicting...</p>
+        </div>
+      </form>
+      <div id="prediction-result" class="prediction-output"></div>
+    </div>
   </main>
 
   <footer class="footer">
-    <p class="footer__text">&copy; 2025 House Price Intelligence App. All rights reserved.</p>
+    <p>&copy; 2025 House Price Intelligence. All rights reserved.</p>
   </footer>
 
   <script type="module" src="/static/js/script.js"></script>

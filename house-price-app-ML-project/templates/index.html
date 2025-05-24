@@ -1,47 +1,38 @@
-
 <!-- FILE: templates/index.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive House Price Prediction and Analysis">
+  <title>House Price Intelligence Dashboard</title>
   <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="icon" href="/static/img/favicon.ico">
-  <title>🏠 House Price Dashboard</title>
 </head>
 <body>
   <header class="header">
-    <h1 class="header__title">House Price Intelligence Dashboard</h1>
-    <nav class="nav">
-      <a href="/" class="nav__link nav__link--active">Home</a>
-      <a href="/eda" class="nav__link">EDA</a>
-      <a href="/predict" class="nav__link">Predict</a>
-      <button id="theme-toggle" aria-label="Toggle theme">🌓</button>
-    </nav>
+    <h1 class="header__title">🏠 House Price Intelligence</h1>
+    <p class="header__subtitle">Smart housing analytics powered by machine learning</p>
+    <a href="/predict" class="btn btn--primary">Start Predicting →</a>
   </header>
 
-  <main class="main">
-    <section class="intro">
-      <h2 class="intro__heading">Welcome</h2>
-      <p class="intro__text">Explore real-world housing data and predict property values using advanced machine learning models.</p>
-      <a href="/predict" class="cta-button">Start Predicting →</a>
+  <main class="main-grid">
+    <section class="card">
+      <h2>📊 Dataset Overview</h2>
+      <ul>
+        <li><strong>Rows:</strong> ~1460</li>
+        <li><strong>Features:</strong> 80+</li>
+        <li><strong>Source:</strong> Kaggle Competition</li>
+      </ul>
     </section>
 
-    <section class="dataset-summary">
-      <h2 class="dataset-summary__heading">Dataset Summary</h2>
-      <ul class="dataset-summary__list">
-        <li class="dataset-summary__item"><strong>Rows:</strong> ~1460</li>
-        <li class="dataset-summary__item"><strong>Features:</strong> 80+</li>
-        <li class="dataset-summary__item"><strong>Source:</strong> Kaggle Competition</li>
-      </ul>
+    <section class="card">
+      <h2>📈 What You'll Learn</h2>
+      <p>Explore housing data trends, run custom predictions, and understand what drives prices — all in one place.</p>
+      <a href="/eda" class="btn btn--outline">Explore EDA</a>
     </section>
   </main>
 
   <footer class="footer">
-    <p class="footer__text">&copy; 2025 House Price Intelligence App. All rights reserved.</p>
+    <p>&copy; 2025 House Price Intelligence. All rights reserved.</p>
   </footer>
-
-  <script type="module" src="/static/js/script.js"></script>
 </body>
 </html>
